@@ -1,0 +1,97 @@
+David Noguera y Samuel Bolaños
+---------------------------------------------------------------
+#SimuProc 1.4.2.0
+ldt 'digite el valor de n'
+sta 030  ;valor de n
+ldt 'digite el valor de x'
+sta 031    ;valor de x
+lda 030
+mul 031
+sta 032
+lda 0A0
+eap 'Este valor es n*x'
+add 032    ;suma 1 + nx
+eap 'Este valor es 1 + nx'
+sta 033    ;direccion de memoria primera suma
+
+
+lda 030 ; carga valor de n
+sub 0A0  ;resta con 1
+eap 'Estes es el valor de n-1'
+sta 035
+lda 030
+mul 035
+eap 'Este es es el valor de n * (n-1)'
+sta 036
+lda 036
+div 0A1
+eap 'Este es es el valor de n*(n-1)/2!'
+sta B00
+
+lda 031
+mul 031
+eap 'EL valor de x elevado al acuadrado es:'
+sta B01
+lda B01
+mul B00
+add 033
+
+eap 'El resultado es'
+hlt
+
+
+
+#0A0
+1
+
+#0A1
+10
+
+#0A2
+11
+
+#0A3
+110
+
+
+---------------------------------------------------------------
+#Taller SimucPro
+msg 'Energy Momentum Relation'
+msg 'Recuerde que E^2= (p*c)^2 + (m*c^2)^2
+msg 'C es 3 en ete caso'
+ldt 'Ingrese el valor para P: Magnitud'
+sta 0A0
+ldt 'Ingrese el valor M: Masa'
+sta 0A1
+
+msg 'Comienza calculo de (p*c)^2'
+lda 0A0
+mul A00  ; Multiplica P * C
+eap 'Mi valor actual es P*C es'
+sta 0A2
+lda 0A2
+mul 0A2
+eap 'Mi valor actual es (p*c)^2'
+sta B00
+
+msg 'Comienza calculo de (m*c^2)^2'
+lda 0A1
+mul A01
+eap 'Mi valor actual es m*c^2 es'
+sta 0A3
+lda 0A3
+mul 0A3
+eap 'Mi valor actual(m*c^2)^2 es:'
+sta B01
+msg 'Suma final'
+lda B00
+add B01
+eap 'Resultado de E^2:'
+hlt
+
+
+#A00
+0011 ; Valor fijo de C como 3
+
+#A01
+1001 ; Valor de 9 para C^2
